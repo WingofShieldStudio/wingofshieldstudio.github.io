@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Wing of Shield Studios</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#1a2744;
+  --navy-dark:#0f1a2e;
+  --navy-mid:#1e2f4a;
+  --orange:#f0841a;
+  --orange-light:#f5a040;
+  --cream:#f0ede6;
+  --white:#ffffff;
+  --gray:#8a9bb5;
+  --card-bg:#162035;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Barlow',sans-serif;background:var(--navy-dark);color:var(--white);overflow-x:hidden;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 60px;
+  background:rgba(15,26,46,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(240,132,26,0.15);
+}
+.nav-logo{display:flex;align-items:center;gap:12px;}
+.nav-logo img{height:40px;}
+.nav-logo-text{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.2rem;font-weight:800;letter-spacing:0.1em;
+  color:var(--white);text-transform:uppercase;
+}
+.nav-logo-text span{color:var(--orange);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.9rem;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--gray);
+  text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--orange);}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:100px 60px 60px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 60% 40%, rgba(240,132,26,0.08) 0%, transparent 60%),
+             linear-gradient(135deg, #0f1a2e 0%, #1a2744 50%, #0f1a2e 100%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(240,132,26,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,132,26,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+.hero-content{
+  position:relative;z-index:2;
+  display:flex;align-items:center;gap:80px;
+  max-width:1200px;width:100%;
+}
+.hero-logo-big{
+  flex-shrink:0;width:220px;height:220px;
+  filter:drop-shadow(0 0 40px rgba(240,132,26,0.3));
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.hero-eyebrow{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.8rem;font-weight:600;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--orange);margin-bottom:16px;
+}
+.hero-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:4.5rem;font-weight:800;line-height:0.95;
+  text-transform:uppercase;letter-spacing:0.02em;margin-bottom:24px;
+}
+.hero-title .line2{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,0.25);}
+.hero-title .accent{color:var(--orange);}
+.hero-desc{font-size:1rem;font-weight:300;line-height:1.7;color:var(--gray);max-width:480px;margin-bottom:36px;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-primary{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.9rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  padding:14px 32px;background:var(--orange);color:var(--white);
+  border:none;cursor:pointer;text-decoration:none;display:inline-block;
+  transition:all 0.2s;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.btn-primary:hover{background:var(--orange-light);transform:translateY(-2px);}
+.btn-outline{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.9rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  padding:14px 32px;background:transparent;color:var(--white);
+  border:1.5px solid rgba(255,255,255,0.2);cursor:pointer;
+  text-decoration:none;display:inline-block;transition:all 0.2s;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.btn-outline:hover{border-color:var(--orange);color:var(--orange);}
+.hero-stats{display:flex;gap:48px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.08);}
+.stat-num{font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:800;color:var(--orange);}
+.stat-label{font-size:0.75rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-top:2px;}
+
+/* SECTIONS */
+section{padding:100px 60px;}
+.section-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:16px;}
+.section-divider{width:48px;height:3px;background:var(--orange);margin-bottom:48px;}
+
+/* GAMES */
+#games{background:var(--navy-dark);}
+#games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;}
+.game-card{
+  background:var(--card-bg);border:1px solid rgba(255,255,255,0.06);
+  overflow:hidden;transition:transform 0.25s,border-color 0.25s;
+}
+.game-card:hover{transform:translateY(-6px);border-color:var(--orange);}
+.game-card-thumb{
+  width:100%;aspect-ratio:16/9;background:var(--navy-mid);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.game-card-thumb img{width:100%;height:100%;object-fit:cover;}
+.thumb-placeholder{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:3rem;font-weight:800;color:rgba(255,255,255,0.06);
+  text-transform:uppercase;letter-spacing:0.1em;
+}
+.game-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,26,46,0.9) 0%,transparent 60%);}
+.game-badge{
+  position:absolute;top:12px;right:12px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  padding:4px 10px;background:var(--orange);color:var(--white);
+}
+.game-card-body{padding:20px 24px 24px;}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
+.game-genre{font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;}
+.game-desc{font-size:0.88rem;color:var(--gray);line-height:1.6;}
+.game-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);}
+.game-platform{font-size:0.75rem;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;}
+.game-link{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);text-decoration:none;transition:opacity 0.2s;}
+.game-link:hover{opacity:0.7;}
+.games-empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--gray);}
+.games-empty-icon{font-size:3rem;margin-bottom:16px;opacity:0.3;}
+.games-empty p{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;}
+.games-loading{grid-column:1/-1;text-align:center;padding:60px;color:var(--gray);font-family:'Barlow Condensed',sans-serif;letter-spacing:0.1em;text-transform:uppercase;}
+
+/* ABOUT */
+#about{background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy-dark) 100%);position:relative;overflow:hidden;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-logo-display{
+  width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  background:var(--card-bg);border:1px solid rgba(240,132,26,0.15);position:relative;overflow:hidden;
+}
+.about-logo-display::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(240,132,26,0.08) 0%,transparent 70%);}
+.about-logo-display img{width:65%;filter:drop-shadow(0 0 30px rgba(240,132,26,0.25));}
+.about-accent-line{position:absolute;bottom:-1px;left:0;right:0;height:3px;background:var(--orange);}
+.about-body{font-size:1rem;line-height:1.8;color:var(--gray);margin-bottom:24px;}
+.about-values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px;}
+.value-item{padding:16px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);}
+.value-label{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--orange);margin-bottom:4px;}
+.value-text{font-size:0.85rem;color:var(--gray);line-height:1.5;}
+
+/* CONTACT */
+#contact{background:var(--navy-dark);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:start;}
+.contact-info p{font-size:0.95rem;color:var(--gray);line-height:1.8;margin-bottom:32px;}
+.contact-detail{display:flex;flex-direction:column;gap:16px;}
+.contact-item{display:flex;align-items:center;gap:14px;}
+.contact-icon{width:40px;height:40px;flex-shrink:0;border:1px solid rgba(240,132,26,0.3);display:flex;align-items:center;justify-content:center;color:var(--orange);font-size:1rem;}
+.contact-label{font-size:0.75rem;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;}
+.contact-val{font-size:0.9rem;color:var(--white);}
+.contact-form{display:flex;flex-direction:column;gap:16px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-label{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);}
+.form-input,.form-textarea{background:var(--card-bg);border:1px solid rgba(255,255,255,0.08);color:var(--white);padding:12px 16px;font-family:'Barlow',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+.form-input:focus,.form-textarea:focus{border-color:var(--orange);}
+.form-textarea{resize:vertical;min-height:120px;}
+.form-submit{
+  font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  padding:14px 36px;align-self:flex-start;background:var(--orange);color:var(--white);
+  border:none;cursor:pointer;transition:all 0.2s;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.form-submit:hover{background:var(--orange-light);}
+.form-msg{font-size:0.85rem;color:var(--orange);display:none;margin-top:4px;}
+
+/* PRIVACY */
+#privacy{background:var(--navy-mid);display:none;}
+#privacy.active{display:block;}
+.privacy-content{max-width:800px;}
+.privacy-content h3{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin:32px 0 10px;}
+.privacy-content p{font-size:0.9rem;color:var(--gray);line-height:1.8;margin-bottom:12px;}
+.privacy-content ul{padding-left:20px;}
+.privacy-content ul li{font-size:0.9rem;color:var(--gray);line-height:1.8;}
+
+/* FOOTER */
+footer{
+  background:var(--navy-dark);border-top:1px solid rgba(255,255,255,0.06);
+  padding:40px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+}
+.footer-logo{display:flex;align-items:center;gap:10px;}
+.footer-logo img{height:30px;}
+.footer-logo-text{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);}
+.footer-links{display:flex;gap:28px;list-style:none;}
+.footer-links a{font-size:0.8rem;color:var(--gray);text-decoration:none;transition:color 0.2s;letter-spacing:0.05em;}
+.footer-links a:hover{color:var(--orange);}
+.footer-copy{font-size:0.78rem;color:var(--gray);}
+
+/* COOKIE */
+#cookie-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:var(--navy-mid);border-top:2px solid var(--orange);
+  padding:20px 60px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  transform:translateY(100%);transition:transform 0.4s ease;
+}
+#cookie-banner.show{transform:translateY(0);}
+.cookie-text{font-size:0.88rem;color:var(--gray);max-width:600px;line-height:1.6;}
+.cookie-text a{color:var(--orange);text-decoration:none;}
+.cookie-btns{display:flex;gap:12px;}
+.cookie-accept{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:10px 24px;background:var(--orange);color:var(--white);border:none;cursor:pointer;}
+.cookie-decline{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:10px 24px;background:transparent;color:var(--gray);border:1px solid rgba(255,255,255,0.15);cursor:pointer;}
+
+/* ADMIN MODAL */
+#admin-modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:20px;}
+#admin-modal.open{display:flex;}
+.admin-panel{background:var(--navy-mid);border:1px solid rgba(240,132,26,0.3);width:100%;max-width:680px;max-height:90vh;overflow-y:auto;position:relative;}
+.admin-header{padding:24px 28px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--navy-mid);z-index:1;}
+.admin-title{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;}
+.admin-title span{color:var(--orange);}
+.admin-close{background:none;border:none;color:var(--gray);font-size:1.4rem;cursor:pointer;transition:color 0.2s;}
+.admin-close:hover{color:var(--white);}
+.admin-body{padding:28px;}
+#admin-login{display:block;}
+#admin-dashboard{display:none;}
+.admin-login-form{display:flex;flex-direction:column;gap:14px;}
+.admin-login-form .form-input{width:100%;}
+.admin-login-btn{font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:12px;background:var(--orange);color:var(--white);border:none;cursor:pointer;width:100%;}
+.admin-err{font-size:0.82rem;color:#e05252;display:none;margin-top:4px;}
+.admin-tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.admin-tab{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;background:none;border:none;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;}
+.admin-tab.active{color:var(--orange);border-bottom-color:var(--orange);}
+.admin-tab-content{display:none;}
+.admin-tab-content.active{display:block;}
+.admin-form{display:flex;flex-direction:column;gap:14px;}
+.admin-form .form-input,.admin-form .form-textarea{width:100%;}
+.admin-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.admin-save-btn{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:12px 28px;background:var(--orange);color:var(--white);border:none;cursor:pointer;align-self:flex-start;}
+.admin-success{font-size:0.82rem;color:#52e085;display:none;margin-top:4px;}
+.admin-api-err{font-size:0.82rem;color:#e05252;display:none;margin-top:4px;}
+.admin-games-list{display:flex;flex-direction:column;gap:12px;}
+.admin-game-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--card-bg);border:1px solid rgba(255,255,255,0.06);gap:16px;}
+.admin-game-name{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
+.admin-game-meta{font-size:0.78rem;color:var(--gray);margin-top:2px;}
+.admin-del-btn{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:6px 14px;border:none;cursor:pointer;background:rgba(224,82,82,0.15);color:#e05252;}
+.admin-del-btn:hover{opacity:0.7;}
+.admin-empty{text-align:center;padding:40px;color:var(--gray);font-size:0.88rem;}
+.admin-loading{text-align:center;padding:30px;color:var(--gray);font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;}
+
+@media(max-width:900px){
+  nav{padding:16px 24px;}
+  .nav-links{display:none;}
+  section{padding:70px 24px;}
+  #hero{padding:100px 24px 60px;}
+  .hero-content{flex-direction:column;text-align:center;gap:40px;}
+  .hero-logo-big{width:150px;height:150px;}
+  .hero-title{font-size:3rem;}
+  .hero-stats{justify-content:center;gap:32px;}
+  .about-grid,.contact-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  footer{padding:28px 24px;flex-direction:column;text-align:center;}
+  #cookie-banner{padding:20px 24px;}
+  .admin-form .form-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="Wing of Shield Studios" onerror="this.style.display='none'"/>
+    <div class="nav-logo-text">Wing of <span>Shield</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#games">Games</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#" onclick="showPrivacy(event)">Privacy</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <img src="logo.png" alt="Wing of Shield Studios" class="hero-logo-big" onerror="this.style.display='none'"/>
+    <div class="hero-text">
+      <div class="hero-eyebrow">Independent Game Studio</div>
+      <h1 class="hero-title">
+        Wing of<br/>
+        <span class="line2">Shield</span><br/>
+        <span class="accent">Studios</span>
+      </h1>
+      <p class="hero-desc">We craft immersive gaming experiences built with passion and precision. From fast-paced action to deep strategy — every title carries our mark.</p>
+      <div class="hero-btns">
+        <a href="#games" class="btn-primary">Our Games</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num" id="stat-games">—</div>
+          <div class="stat-label">Games Released</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Indie Passion</div>
+        </div>
+        <div>
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Ideas in Dev</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section id="games">
+  <div style="margin-bottom:48px;">
+    <div class="section-eyebrow">Portfolio</div>
+    <h2 class="section-title">Our Games</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div id="games-grid"><div class="games-loading">Loading games...</div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <div class="about-logo-display">
+        <img src="logo.png" alt="Wing of Shield Studios" onerror="this.style.display='none'"/>
+        <div class="about-accent-line"></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-eyebrow">Who We Are</div>
+      <h2 class="section-title">About the Studio</h2>
+      <div class="section-divider"></div>
+      <p class="about-body">Wing of Shield Studios is an independent game development studio built on bold ideas and relentless craftsmanship. We develop across platforms — mobile, PC, and web — with a focus on tight mechanics, memorable worlds, and player-first design.</p>
+      <p class="about-body">Every game we ship is forged under pressure into something that lasts.</p>
+      <div class="about-values">
+        <div class="value-item"><div class="value-label">Player First</div><div class="value-text">Every decision starts with the experience we want players to have.</div></div>
+        <div class="value-item"><div class="value-label">Bold Vision</div><div class="value-text">We don't follow templates. We build what excites us.</div></div>
+        <div class="value-item"><div class="value-label">Ship It</div><div class="value-text">Ideas are nothing without execution. We build, iterate, release.</div></div>
+        <div class="value-item"><div class="value-label">Indie Spirit</div><div class="value-text">Small team. No compromise. Full creative ownership.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-eyebrow">Reach Out</div>
+      <h2 class="section-title">Contact Us</h2>
+      <div class="section-divider"></div>
+      <p>Have a project idea, collaboration proposal, or just want to talk games? We'd love to hear from you.</p>
+      <div class="contact-detail">
+        <div class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div><div class="contact-label">Email</div><div class="contact-val">hello@wingofshield.com</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🌐</div>
+          <div><div class="contact-label">Studio</div><div class="contact-val">Wing of Shield Studios</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Name</label><input type="text" class="form-input" id="cf-name" placeholder="Your name"/></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="cf-email" placeholder="your@email.com"/></div>
+        </div>
+        <div class="form-group"><label class="form-label">Subject</label><input type="text" class="form-input" id="cf-subject" placeholder="What's this about?"/></div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" id="cf-msg" placeholder="Tell us more..."></textarea></div>
+        <button class="form-submit" onclick="submitContact()">Send Message</button>
+        <div class="form-msg" id="form-msg">✓ Message sent! We'll get back to you soon.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy">
+  <div class="privacy-content">
+    <div class="section-eyebrow">Legal</div>
+    <h2 class="section-title">Privacy Policy</h2>
+    <div class="section-divider"></div>
+    <p>Last updated: June 2026</p>
+    <p>Wing of Shield Studios ("we", "our", "us") is committed to protecting your privacy. This policy explains how we collect, use, and protect your information when you visit our website.</p>
+    <h3>Information We Collect</h3>
+    <p>We may collect the following types of information:</p>
+    <ul><li>Information you provide voluntarily (e.g. name, email via contact form)</li><li>Usage data collected automatically (e.g. pages visited, time on site)</li><li>Cookies and similar tracking technologies</li></ul>
+    <h3>How We Use Your Information</h3>
+    <ul><li>Respond to your inquiries and messages</li><li>Improve our website and services</li><li>Analyse website traffic and usage patterns</li><li>Comply with legal obligations</li></ul>
+    <h3>Cookies</h3>
+    <p>Our website uses cookies to enhance your browsing experience. You can control cookie settings through your browser. We use essential cookies (required for functionality) and analytics cookies (to understand usage).</p>
+    <h3>Data Sharing</h3>
+    <p>We do not sell, trade, or rent your personal information to third parties.</p>
+    <h3>Your Rights (GDPR)</h3>
+    <ul><li>Access the personal data we hold about you</li><li>Request correction or deletion of your data</li><li>Object to or restrict our processing of your data</li><li>Data portability</li><li>Withdraw consent at any time</li></ul>
+    <p>To exercise these rights: <span style="color:var(--orange)">privacy@wingofshield.com</span></p>
+    <h3>Security</h3>
+    <p>We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, alteration, or destruction.</p>
+    <h3>Contact</h3>
+    <p>For privacy questions: <span style="color:var(--orange)">privacy@wingofshield.com</span></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="logo.png" alt="Wing of Shield Studios" onerror="this.style.display='none'"/>
+    <div class="footer-logo-text">Wing of Shield Studios</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#games">Games</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#" onclick="showPrivacy(event)">Privacy Policy</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Wing of Shield Studios. All rights reserved.</div>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+  <p class="cookie-text">We use cookies to improve your experience. By continuing, you agree to our <a href="#" onclick="showPrivacy(event)">Privacy Policy</a>.</p>
+  <div class="cookie-btns">
+    <button class="cookie-accept" onclick="acceptCookies()">Accept</button>
+    <button class="cookie-decline" onclick="declineCookies()">Decline</button>
+  </div>
+</div>
+
+<!-- ADMIN MODAL (hidden, Ctrl+Shift+A to open) -->
+<div id="admin-modal">
+  <div class="admin-panel">
+    <div class="admin-header">
+      <div class="admin-title">Admin <span>Panel</span></div>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="admin-body">
+      <div id="admin-login">
+        <p style="font-size:0.85rem;color:var(--gray);margin-bottom:20px;">Enter admin password to manage games.</p>
+        <div class="admin-login-form">
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" id="admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+          </div>
+          <div class="admin-err" id="admin-err">Incorrect password.</div>
+          <button class="admin-login-btn" onclick="doLogin()">Login</button>
+        </div>
+      </div>
+      <div id="admin-dashboard">
+        <div class="admin-tabs">
+          <button class="admin-tab active" onclick="switchTab('add',this)">Add Game</button>
+          <button class="admin-tab" onclick="switchTab('manage',this)">Manage Games</button>
+        </div>
+        <div class="admin-tab-content active" id="tab-add">
+          <div class="admin-form">
+            <div class="admin-form .form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div class="form-group"><label class="form-label">Title *</label><input type="text" class="form-input" id="g-title" placeholder="Game title"/></div>
+              <div class="form-group"><label class="form-label">Genre *</label><input type="text" class="form-input" id="g-genre" placeholder="e.g. Action, Puzzle"/></div>
+            </div>
+            <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="g-desc" placeholder="Short description..." style="min-height:80px;width:100%;"></textarea></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div class="form-group"><label class="form-label">Platform</label><input type="text" class="form-input" id="g-platform" placeholder="PC / Mobile / Web"/></div>
+              <div class="form-group"><label class="form-label">Badge</label><input type="text" class="form-input" id="g-badge" placeholder="Released / Coming Soon"/></div>
+            </div>
+            <div class="form-group"><label class="form-label">Play / Store Link</label><input type="text" class="form-input" id="g-link" placeholder="https://..."/></div>
+            <div class="form-group"><label class="form-label">Thumbnail URL</label><input type="text" class="form-input" id="g-thumb" placeholder="https://... (optional)"/></div>
+            <button class="admin-save-btn" onclick="addGame()">Add Game</button>
+            <div class="admin-success" id="add-success">✓ Game added!</div>
+            <div class="admin-api-err" id="add-err">Error saving game. Try again.</div>
+          </div>
+        </div>
+        <div class="admin-tab-content" id="tab-manage">
+          <div class="admin-games-list" id="admin-games-list"><div class="admin-loading">Loading...</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- CONFIG ----
+const SUPABASE_URL = 'https://cptnvfdezgcmmajiwrxf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_vzd60mI4aExBQkTLnkO6Bw_vqqgpB7j';
+const ADMIN_PASSWORD = 'wingofshield2026'; // Change this to your password
+
+// ---- SUPABASE HELPERS ----
+async function dbFetch(path, options={}){
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    headers:{
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': options.prefer || '',
+      ...options.headers
+    },
+    ...options
+  });
+  if(!res.ok){
+    const err = await res.text();
+    throw new Error(err);
+  }
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+async function getGames(){
+  return await dbFetch('games?select=*&order=created_at.asc');
+}
+async function insertGame(game){
+  return await dbFetch('games', {
+    method:'POST',
+    prefer:'return=representation',
+    body: JSON.stringify(game)
+  });
+}
+async function deleteGame(id){
+  return await dbFetch(`games?id=eq.${id}`, {method:'DELETE'});
+}
+
+// ---- RENDER GAMES ----
+async function renderGames(){
+  const grid = document.getElementById('games-grid');
+  try{
+    const games = await getGames();
+    document.getElementById('stat-games').textContent = games.length;
+    if(!games.length){
+      grid.innerHTML = `<div class="games-empty"><div class="games-empty-icon">🎮</div><p>No games yet — check back soon</p></div>`;
+      return;
+    }
+    grid.innerHTML = games.map(g => `
+      <div class="game-card">
+        <div class="game-card-thumb">
+          ${g.thumb ? `<img src="${g.thumb}" alt="${g.title}" onerror="this.remove()"/>` : ''}
+          <div class="thumb-placeholder">${g.title.substring(0,2).toUpperCase()}</div>
+          <div class="game-card-overlay"></div>
+          ${g.badge ? `<div class="game-badge">${g.badge}</div>` : ''}
+        </div>
+        <div class="game-card-body">
+          <div class="game-title">${g.title}</div>
+          <div class="game-genre">${g.genre||''}</div>
+          <div class="game-desc">${g.description||'An exciting game from Wing of Shield Studios.'}</div>
+          <div class="game-card-footer">
+            <div class="game-platform">${g.platform||'PC'}</div>
+            ${g.link ? `<a href="${g.link}" target="_blank" class="game-link">Play Now →</a>` : ''}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  } catch(e){
+    grid.innerHTML = `<div class="games-empty"><div class="games-empty-icon">⚠</div><p>Could not load games</p></div>`;
+  }
+}
+
+// ---- ADMIN ----
+// Ctrl+Shift+A to open — no button visible to users
+document.addEventListener('keydown', function(e){
+  if(e.ctrlKey && e.shiftKey && e.key === 'A'){
+    e.preventDefault();
+    document.getElementById('admin-modal').classList.add('open');
+  }
+});
+
+function closeAdmin(){
+  document.getElementById('admin-modal').classList.remove('open');
+  document.getElementById('admin-pass').value='';
+  document.getElementById('admin-err').style.display='none';
+}
+
+function doLogin(){
+  const pass = document.getElementById('admin-pass').value;
+  if(pass === ADMIN_PASSWORD){
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-dashboard').style.display='block';
+    document.getElementById('admin-err').style.display='none';
+    renderAdminList();
+  } else {
+    document.getElementById('admin-err').style.display='block';
+    document.getElementById('admin-pass').value='';
+  }
+}
+
+function switchTab(name, btn){
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='manage') renderAdminList();
+}
+
+async function addGame(){
+  const title = document.getElementById('g-title').value.trim();
+  const genre = document.getElementById('g-genre').value.trim();
+  if(!title||!genre){alert('Title and Genre required.');return;}
+  const game = {
+    title,
+    genre,
+    description: document.getElementById('g-desc').value.trim(),
+    platform: document.getElementById('g-platform').value.trim(),
+    badge: document.getElementById('g-badge').value.trim(),
+    link: document.getElementById('g-link').value.trim(),
+    thumb: document.getElementById('g-thumb').value.trim(),
+  };
+  const suc = document.getElementById('add-success');
+  const err = document.getElementById('add-err');
+  suc.style.display='none'; err.style.display='none';
+  try{
+    await insertGame(game);
+    ['g-title','g-genre','g-desc','g-platform','g-badge','g-link','g-thumb'].forEach(id=>document.getElementById(id).value='');
+    suc.style.display='block';
+    setTimeout(()=>suc.style.display='none', 2500);
+    renderGames();
+  } catch(e){
+    err.style.display='block';
+    setTimeout(()=>err.style.display='none', 3000);
+  }
+}
+
+async function renderAdminList(){
+  const list = document.getElementById('admin-games-list');
+  list.innerHTML = '<div class="admin-loading">Loading...</div>';
+  try{
+    const games = await getGames();
+    if(!games.length){list.innerHTML='<div class="admin-empty">No games added yet.</div>';return;}
+    list.innerHTML = games.map(g=>`
+      <div class="admin-game-item">
+        <div>
+          <div class="admin-game-name">${g.title}</div>
+          <div class="admin-game-meta">${g.genre||'—'} · ${g.platform||'—'} · ${g.badge||'No badge'}</div>
+        </div>
+        <button class="admin-del-btn" onclick="confirmDelete(${g.id})">Delete</button>
+      </div>
+    `).join('');
+  } catch(e){
+    list.innerHTML='<div class="admin-empty">Error loading games.</div>';
+  }
+}
+
+async function confirmDelete(id){
+  if(!confirm('Delete this game?')) return;
+  try{
+    await deleteGame(id);
+    renderGames();
+    renderAdminList();
+  } catch(e){
+    alert('Error deleting game.');
+  }
+}
+
+// ---- CONTACT ----
+function submitContact(){
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const msg = document.getElementById('cf-msg').value.trim();
+  if(!name||!email||!msg){alert('Please fill Name, Email and Message.');return;}
+  const el = document.getElementById('form-msg');
+  el.style.display='block';
+  ['cf-name','cf-email','cf-subject','cf-msg'].forEach(id=>document.getElementById(id).value='');
+  setTimeout(()=>el.style.display='none', 4000);
+}
+
+// ---- PRIVACY ----
+function showPrivacy(e){
+  e.preventDefault();
+  const p = document.getElementById('privacy');
+  p.classList.toggle('active');
+  if(p.classList.contains('active')) p.scrollIntoView({behavior:'smooth'});
+}
+
+// ---- COOKIES ----
+if(!localStorage.getItem('wos_cookie')){
+  setTimeout(()=>document.getElementById('cookie-banner').classList.add('show'), 1500);
+}
+function acceptCookies(){localStorage.setItem('wos_cookie','accepted');document.getElementById('cookie-banner').classList.remove('show');}
+function declineCookies(){localStorage.setItem('wos_cookie','declined');document.getElementById('cookie-banner').classList.remove('show');}
+
+// ---- INIT ----
+renderGames();
+document.getElementById('admin-modal').addEventListener('click',function(e){if(e.target===this)closeAdmin();});
+</script>
+</body>
+</html>
