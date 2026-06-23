@@ -547,12 +547,10 @@ footer{
 </div>
 
 <script>
-// ---- CONFIG ----
 const SUPABASE_URL = 'https://cptnvfdezgcmmajiwrxf.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_vzd60mI4aExBQkTLnkO6Bw_vqqgpB7j';
-const ADMIN_PASSWORD = 'wingofshield2026'; // Change this to your password
+const ADMIN_PASSWORD = 'wingofshield2026';
 
-// ---- SUPABASE HELPERS ----
 async function dbFetch(path, options={}){
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     headers:{
@@ -564,45 +562,28 @@ async function dbFetch(path, options={}){
     },
     ...options
   });
-  if(!res.ok){
-    const err = await res.text();
-    throw new Error(err);
-  }
+  if(!res.ok){const err = await res.text();throw new Error(err);}
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
 
-async function getGames(){
-  return await dbFetch('games?select=*&order=created_at.asc');
-}
-async function insertGame(game){
-  return await dbFetch('games', {
-    method:'POST',
-    prefer:'return=representation',
-    body: JSON.stringify(game)
-  });
-}
-async function deleteGame(id){
-  return await dbFetch(`games?id=eq.${id}`, {method:'DELETE'});
-}
+async function getGames(){return await dbFetch('games?select=*&order=created_at.asc');}
+async function insertGame(game){return await dbFetch('games',{method:'POST',prefer:'return=representation',body:JSON.stringify(game)});}
+async function deleteGame(id){return await dbFetch(`games?id=eq.${id}`,{method:'DELETE'});}
 
-// ---- RENDER GAMES ----
 async function renderGames(){
   const grid = document.getElementById('games-grid');
   try{
     const games = await getGames();
     document.getElementById('stat-games').textContent = games.length;
-    if(!games.length){
-      grid.innerHTML = `<div class="games-empty"><div class="games-empty-icon">🎮</div><p>No games yet — check back soon</p></div>`;
-      return;
-    }
-    grid.innerHTML = games.map(g => `
+    if(!games.length){grid.innerHTML=`<div class="games-empty"><div class="games-empty-icon">🎮</div><p>No games yet — check back soon</p></div>`;return;}
+    grid.innerHTML = games.map(g=>`
       <div class="game-card">
         <div class="game-card-thumb">
-          ${g.thumb ? `<img src="${g.thumb}" alt="${g.title}" onerror="this.remove()"/>` : ''}
+          ${g.thumb?`<img src="${g.thumb}" alt="${g.title}" onerror="this.remove()"/>`:''}
           <div class="thumb-placeholder">${g.title.substring(0,2).toUpperCase()}</div>
           <div class="game-card-overlay"></div>
-          ${g.badge ? `<div class="game-badge">${g.badge}</div>` : ''}
+          ${g.badge?`<div class="game-badge">${g.badge}</div>`:''}
         </div>
         <div class="game-card-body">
           <div class="game-title">${g.title}</div>
@@ -610,139 +591,26 @@ async function renderGames(){
           <div class="game-desc">${g.description||'An exciting game from Wing of Shield Studios.'}</div>
           <div class="game-card-footer">
             <div class="game-platform">${g.platform||'PC'}</div>
-            ${g.link ? `<a href="${g.link}" target="_blank" class="game-link">Play Now →</a>` : ''}
+            ${g.link?`<a href="${g.link}" target="_blank" class="game-link">Play Now →</a>`:''}
           </div>
         </div>
       </div>
     `).join('');
-  } catch(e){
-    grid.innerHTML = `<div class="games-empty"><div class="games-empty-icon">⚠</div><p>Could not load games</p></div>`;
-  }
+  }catch(e){grid.innerHTML=`<div class="games-empty"><div class="games-empty-icon">⚠</div><p>Could not load games</p></div>`;}
 }
 
-// ---- ADMIN ----
-// Ctrl+Shift+A to open — no button visible to users
-document.addEventListener('keydown', function(e){
-  if(e.ctrlKey && e.shiftKey && e.key === 'A'){
-    e.preventDefault();
-    document.getElementById('admin-modal').classList.add('open');
-  }
-});
-
-function closeAdmin(){
-  document.getElementById('admin-modal').classList.remove('open');
-  document.getElementById('admin-pass').value='';
-  document.getElementById('admin-err').style.display='none';
-}
-
-function doLogin(){
-  const pass = document.getElementById('admin-pass').value;
-  if(pass === ADMIN_PASSWORD){
-    document.getElementById('admin-login').style.display='none';
-    document.getElementById('admin-dashboard').style.display='block';
-    document.getElementById('admin-err').style.display='none';
-    renderAdminList();
-  } else {
-    document.getElementById('admin-err').style.display='block';
-    document.getElementById('admin-pass').value='';
-  }
-}
-
-function switchTab(name, btn){
-  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.admin-tab-content').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
-  if(name==='manage') renderAdminList();
-}
-
-async function addGame(){
-  const title = document.getElementById('g-title').value.trim();
-  const genre = document.getElementById('g-genre').value.trim();
-  if(!title||!genre){alert('Title and Genre required.');return;}
-  const game = {
-    title,
-    genre,
-    description: document.getElementById('g-desc').value.trim(),
-    platform: document.getElementById('g-platform').value.trim(),
-    badge: document.getElementById('g-badge').value.trim(),
-    link: document.getElementById('g-link').value.trim(),
-    thumb: document.getElementById('g-thumb').value.trim(),
-  };
-  const suc = document.getElementById('add-success');
-  const err = document.getElementById('add-err');
-  suc.style.display='none'; err.style.display='none';
-  try{
-    await insertGame(game);
-    ['g-title','g-genre','g-desc','g-platform','g-badge','g-link','g-thumb'].forEach(id=>document.getElementById(id).value='');
-    suc.style.display='block';
-    setTimeout(()=>suc.style.display='none', 2500);
-    renderGames();
-  } catch(e){
-    err.style.display='block';
-    setTimeout(()=>err.style.display='none', 3000);
-  }
-}
-
-async function renderAdminList(){
-  const list = document.getElementById('admin-games-list');
-  list.innerHTML = '<div class="admin-loading">Loading...</div>';
-  try{
-    const games = await getGames();
-    if(!games.length){list.innerHTML='<div class="admin-empty">No games added yet.</div>';return;}
-    list.innerHTML = games.map(g=>`
-      <div class="admin-game-item">
-        <div>
-          <div class="admin-game-name">${g.title}</div>
-          <div class="admin-game-meta">${g.genre||'—'} · ${g.platform||'—'} · ${g.badge||'No badge'}</div>
-        </div>
-        <button class="admin-del-btn" onclick="confirmDelete(${g.id})">Delete</button>
-      </div>
-    `).join('');
-  } catch(e){
-    list.innerHTML='<div class="admin-empty">Error loading games.</div>';
-  }
-}
-
-async function confirmDelete(id){
-  if(!confirm('Delete this game?')) return;
-  try{
-    await deleteGame(id);
-    renderGames();
-    renderAdminList();
-  } catch(e){
-    alert('Error deleting game.');
-  }
-}
-
-// ---- CONTACT ----
-function submitContact(){
-  const name = document.getElementById('cf-name').value.trim();
-  const email = document.getElementById('cf-email').value.trim();
-  const msg = document.getElementById('cf-msg').value.trim();
-  if(!name||!email||!msg){alert('Please fill Name, Email and Message.');return;}
-  const el = document.getElementById('form-msg');
-  el.style.display='block';
-  ['cf-name','cf-email','cf-subject','cf-msg'].forEach(id=>document.getElementById(id).value='');
-  setTimeout(()=>el.style.display='none', 4000);
-}
-
-// ---- PRIVACY ----
-function showPrivacy(e){
-  e.preventDefault();
-  const p = document.getElementById('privacy');
-  p.classList.toggle('active');
-  if(p.classList.contains('active')) p.scrollIntoView({behavior:'smooth'});
-}
-
-// ---- COOKIES ----
-if(!localStorage.getItem('wos_cookie')){
-  setTimeout(()=>document.getElementById('cookie-banner').classList.add('show'), 1500);
-}
+document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.shiftKey&&e.key==='A'){e.preventDefault();document.getElementById('admin-modal').classList.add('open');}});
+function closeAdmin(){document.getElementById('admin-modal').classList.remove('open');document.getElementById('admin-pass').value='';document.getElementById('admin-err').style.display='none';}
+function doLogin(){const pass=document.getElementById('admin-pass').value;if(pass===ADMIN_PASSWORD){document.getElementById('admin-login').style.display='none';document.getElementById('admin-dashboard').style.display='block';document.getElementById('admin-err').style.display='none';renderAdminList();}else{document.getElementById('admin-err').style.display='block';document.getElementById('admin-pass').value='';}}
+function switchTab(name,btn){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.admin-tab-content').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.getElementById('tab-'+name).classList.add('active');if(name==='manage')renderAdminList();}
+async function addGame(){const title=document.getElementById('g-title').value.trim();const genre=document.getElementById('g-genre').value.trim();if(!title||!genre){alert('Title and Genre required.');return;}const game={title,genre,description:document.getElementById('g-desc').value.trim(),platform:document.getElementById('g-platform').value.trim(),badge:document.getElementById('g-badge').value.trim(),link:document.getElementById('g-link').value.trim(),thumb:document.getElementById('g-thumb').value.trim()};const suc=document.getElementById('add-success');const err=document.getElementById('add-err');suc.style.display='none';err.style.display='none';try{await insertGame(game);['g-title','g-genre','g-desc','g-platform','g-badge','g-link','g-thumb'].forEach(id=>document.getElementById(id).value='');suc.style.display='block';setTimeout(()=>suc.style.display='none',2500);renderGames();}catch(e){err.style.display='block';setTimeout(()=>err.style.display='none',3000);}}
+async function renderAdminList(){const list=document.getElementById('admin-games-list');list.innerHTML='<div class="admin-loading">Loading...</div>';try{const games=await getGames();if(!games.length){list.innerHTML='<div class="admin-empty">No games added yet.</div>';return;}list.innerHTML=games.map(g=>`<div class="admin-game-item"><div><div class="admin-game-name">${g.title}</div><div class="admin-game-meta">${g.genre||'—'} · ${g.platform||'—'} · ${g.badge||'No badge'}</div></div><button class="admin-del-btn" onclick="confirmDelete(${g.id})">Delete</button></div>`).join('');}catch(e){list.innerHTML='<div class="admin-empty">Error loading games.</div>';}}
+async function confirmDelete(id){if(!confirm('Delete this game?'))return;try{await deleteGame(id);renderGames();renderAdminList();}catch(e){alert('Error deleting game.');}}
+function submitContact(){const name=document.getElementById('cf-name').value.trim();const email=document.getElementById('cf-email').value.trim();const msg=document.getElementById('cf-msg').value.trim();if(!name||!email||!msg){alert('Please fill Name, Email and Message.');return;}const el=document.getElementById('form-msg');el.style.display='block';['cf-name','cf-email','cf-subject','cf-msg'].forEach(id=>document.getElementById(id).value='');setTimeout(()=>el.style.display='none',4000);}
+function showPrivacy(e){e.preventDefault();const p=document.getElementById('privacy');p.classList.toggle('active');if(p.classList.contains('active'))p.scrollIntoView({behavior:'smooth'});}
+if(!localStorage.getItem('wos_cookie')){setTimeout(()=>document.getElementById('cookie-banner').classList.add('show'),1500);}
 function acceptCookies(){localStorage.setItem('wos_cookie','accepted');document.getElementById('cookie-banner').classList.remove('show');}
 function declineCookies(){localStorage.setItem('wos_cookie','declined');document.getElementById('cookie-banner').classList.remove('show');}
-
-// ---- INIT ----
 renderGames();
 document.getElementById('admin-modal').addEventListener('click',function(e){if(e.target===this)closeAdmin();});
 </script>
