@@ -766,10 +766,23 @@ function populateFilters(games){
     sel.value = current || '';
   };
 
-  fillSelect('f-store', games.map(g=>g.store));
   fillSelect('f-genre', games.map(g=>g.genre));
   fillSelect('f-platform', games.map(g=>g.platform));
   fillSelect('f-color', games.map(g=>g.color));
+
+  // Store filter uses a fixed list, not derived from existing game data
+  const STORE_OPTIONS = ['Google Play','Apple App Store','Amazon Appstore','itch.io','Google Drive','Steam','Website','Other'];
+  const storeSel = document.getElementById('f-store');
+  const currentStore = storeSel.value;
+  const firstStoreOpt = storeSel.options[0];
+  storeSel.innerHTML = '';
+  storeSel.appendChild(firstStoreOpt);
+  STORE_OPTIONS.forEach(v=>{
+    const opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    storeSel.appendChild(opt);
+  });
+  storeSel.value = currentStore || '';
 
   // Color select shows swatches via colored text (native select can't show dots easily, so label with dot char)
   const colorSel = document.getElementById('f-color');
